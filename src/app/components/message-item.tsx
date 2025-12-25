@@ -29,11 +29,11 @@ export function MessageItem({ message }: MessageItemProps) {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      className="group"
+      className="group max-w-full overflow-x-hidden"
       onMouseEnter={() => setShowActions(true)}
       onMouseLeave={() => setShowActions(false)}
     >
-      <div className="flex gap-3 mb-4">
+      <div className="flex gap-3 mb-4 max-w-full overflow-x-hidden">
         {/* Avatar */}
         <div
           className={`w-8 h-8 rounded-lg shrink-0 flex items-center justify-center ${
@@ -48,46 +48,48 @@ export function MessageItem({ message }: MessageItemProps) {
         </div>
 
         {/* Content */}
-        <div className="flex-1 min-w-0">
+        <div className="flex-1 min-w-0 max-w-full overflow-hidden">
           <div className="flex items-center gap-2 mb-1">
-            <span className="font-medium">
+            <span className="font-medium truncate">
               {message.role === "user" ? "You" : "Assistant"}
             </span>
-            <span className="text-xs text-muted-foreground">{message.timestamp}</span>
+            <span className="text-xs text-muted-foreground truncate">{message.timestamp}</span>
           </div>
 
           {/* Message text */}
-          <div className="text-foreground whitespace-pre-wrap mb-2">{message.content}</div>
+          <div className="text-foreground whitespace-pre-wrap break-words max-w-full overflow-wrap-anywhere p-[0px]">
+            {message.content}
+          </div>
 
           {/* Code block if present */}
           {message.codeBlock && (
-            <div className="border border-border rounded-lg overflow-hidden bg-muted/30 mb-2 shadow-sm">
+            <div className="border border-border rounded-lg overflow-hidden bg-muted/30 mb-2 shadow-sm max-w-full">
               <div className="flex items-center justify-between px-4 py-2 border-b border-border bg-muted/50">
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-medium">{message.codeBlock.filename}</span>
-                  <Badge variant="outline" className="text-xs">
+                <div className="flex items-center gap-2 min-w-0 flex-1">
+                  <span className="text-xs font-medium truncate">{message.codeBlock.filename}</span>
+                  <Badge variant="outline" className="text-xs shrink-0">
                     {message.codeBlock.language}
                   </Badge>
                 </div>
-                <Button variant="ghost" size="sm" className="h-7 px-2">
+                <Button variant="ghost" size="sm" className="h-7 px-2 shrink-0">
                   <Copy className="w-3 h-3 mr-1" />
                   Copy
                 </Button>
               </div>
-              <pre className="p-4 text-sm overflow-x-auto bg-black/5 dark:bg-white/5">
-                <code className="text-foreground/90">{message.codeBlock.code}</code>
+              <pre className="p-4 text-sm overflow-x-auto bg-black/5 dark:bg-white/5 max-w-full">
+                <code className="text-foreground/90 break-all">{message.codeBlock.code}</code>
               </pre>
             </div>
           )}
 
           {/* Tool chips */}
           {message.tools && message.tools.length > 0 && (
-            <div className="flex items-center gap-2 flex-wrap">
+            <div className="flex items-center gap-2 flex-wrap max-w-full">
               {message.tools.map((tool, index) => (
                 <Badge
                   key={index}
                   variant="outline"
-                  className="text-xs cursor-pointer hover:bg-accent transition-colors"
+                  className="text-xs cursor-pointer hover:bg-accent transition-colors truncate max-w-full"
                 >
                   {tool}
                 </Badge>

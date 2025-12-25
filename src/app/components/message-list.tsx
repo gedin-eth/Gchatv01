@@ -18,14 +18,14 @@ export function MessageList({ messages }: MessageListProps) {
   });
 
   return (
-    <ScrollArea className="flex-1">
+    <ScrollArea className="flex-1 w-full">
       {/* Centered conversation column with max width ~880-960px */}
-      <div className="w-full max-w-[920px] mx-auto px-4 md:px-6 py-6 md:py-8 space-y-6 relative">
+      <div className="w-full max-w-[920px] mx-auto px-4 md:px-6 py-6 md:py-8 space-y-6 relative max-w-full overflow-x-hidden">
         {/* Vertical timeline connector */}
         <div className="absolute left-12 top-0 bottom-0 w-px bg-border/30 hidden md:block" />
         
         {Object.entries(groupedMessages).map(([date, msgs]) => (
-          <div key={date} className="space-y-4">
+          <div key={date} className="space-y-4 max-w-full overflow-x-hidden">
             {/* Date separator */}
             <div className="flex items-center gap-4">
               <div className="h-px bg-border flex-1" />
@@ -35,7 +35,9 @@ export function MessageList({ messages }: MessageListProps) {
 
             {/* Messages */}
             {msgs.map((message) => (
-              <MessageItem key={message.id} message={message} />
+              <div key={message.id} className="max-w-full overflow-x-hidden">
+                <MessageItem message={message} />
+              </div>
             ))}
           </div>
         ))}
@@ -44,7 +46,7 @@ export function MessageList({ messages }: MessageListProps) {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="flex gap-3"
+          className="flex gap-3 max-w-full overflow-x-hidden"
         >
           <div className="w-8 h-8 rounded-lg shrink-0 flex items-center justify-center bg-gradient-to-br from-orange-500 to-pink-500">
             <span className="text-white text-sm">AI</span>

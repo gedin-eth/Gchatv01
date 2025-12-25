@@ -194,7 +194,7 @@ export default function App() {
                 />
 
                 {/* Center: Chat Canvas */}
-                <div className="flex-1 flex flex-col overflow-hidden">
+                <div className="flex-1 flex flex-col overflow-hidden w-full">
                   {/* Messages */}
                   <MessageList messages={mockMessages} />
 
